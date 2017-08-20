@@ -1,25 +1,26 @@
-img {
-  width: 300px;
-  padding-bottom: 10px;
+body {
+  width: 340px;
 }
 
-span {
-  font-weight: bold;
+img {
+  width:300px;
 }
 
 ul {
   list-style: none;
-  padding: 0px;
+  padding: 0;
 }
 
-#
-
-#outside {
-  border: 1px solid #ddd;
-  padding: 10px 10px 10px 10px;
+.bold {
+  font-weight: bold;
 }
 
-#inside {
+.italic{
+  font-style:italic;
+}
+
+.outside,
+.inside {
   border: 1px solid #ddd;
-  padding: 10px 10px 10px 10px;
+  padding: 10px;
 }

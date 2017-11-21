@@ -15,35 +15,29 @@ var Enemy_Rock = function(x, y, speed) {
   this.sprite = 'images/Rock.png';
 };
 
-
-
 Enemy_Rock.prototype.update = function(dt) {
   this.x += this.speed * dt;
   if (this.x >= 505) {
     this.x = 0;
   }
   checkCollision(this);
+  checkWin(this);
+};
+
+
+Enemy.prototype.update = function(dt) {
+  this.x += this.speed * dt;
+  if (this.x >= 505) {
+    this.x = 0;
+  }
+  checkCollision(this);
+  checkWin(this);
 };
 
 Enemy_Rock.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
-  // You should multiply any movement by the dt parameter
-  // which will ensure the game runs at the same speed for
-  // all computers.
-  this.x += this.speed * dt;
-
-  // 505 defines the width of the Canvas.
-  // The code that initializes the left end again when the enemy is struck at the right end.
-  if (this.x >= 505) {
-    this.x = 0;
-  }
-  checkCollision(this);
-};
 
 // * Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
@@ -68,16 +62,16 @@ Player.prototype.render = function() {
 // KeyPress Settings
 Player.prototype.handleInput = function(keyPress) {
   if (keyPress == 'left') {
-    player.x -= player.speed;
+    this.x -= this.speed;
   }
   if (keyPress == 'up') {
-    player.y -= player.speed - 20;
+    this.y -= this.speed - 20;
   }
   if (keyPress == 'right') {
-    player.x += player.speed;
+    this.x += this.speed;
   }
   if (keyPress == 'down') {
-    player.y += player.speed - 20;
+    this.y += this.speed - 20;
   }
   console.log('keyPress is: ' + keyPress);
 };
@@ -103,10 +97,20 @@ var checkCollision = function(anEnemy) {
     player.x = 202.5;
     player.y = 383;
   }
+  // check if player runs into left, bottom, or right canvas walls
+  // prevent player from moving beyond canvas wall boundaries
+  if (player.y > 383) {
+    player.y = 383;
+  }
+  if (player.x > 402.5) {
+    player.x = 402.5;
+  }
+  if (player.x < 2.5) {
+    player.x = 2.5;
+  }
+}
 
-
-
-
+var checkWin = function(anEnemy) {
   // check for player reaching top of canvas and winning the game
   if (player.y + 63 <= 0) {
     // if player wins, add 1 to the score and level
@@ -122,19 +126,9 @@ var checkCollision = function(anEnemy) {
     console.log('current score: ' + score + ', current level: ' + gameLevel);
     increaseDifficulty(score);
   }
-
-  // check if player runs into left, bottom, or right canvas walls
-  // prevent player from moving beyond canvas wall boundaries
-  if (player.y > 383) {
-    player.y = 383;
-  }
-  if (player.x > 402.5) {
-    player.x = 402.5;
-  }
-  if (player.x < 2.5) {
-    player.x = 2.5;
-  }
 };
+
+
 
 // Increase number of enemies on screen based on player's score
 var increaseDifficulty = function(numEnemies) {

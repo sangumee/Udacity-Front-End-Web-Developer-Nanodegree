@@ -7,3 +7,7 @@ This game is a web game created with HTML Canvas and is a winning game when the 
 **There are two ways to run this project.**
 1. After downloading the zip file, unzip it and run index.html file.
 2. Provides a link through the Github Page hosting feature without having to download it.
+
+# Usage
+
+This is a game in which you manipulate the arrow keys to win when the player crosses the river and reaches the other side.

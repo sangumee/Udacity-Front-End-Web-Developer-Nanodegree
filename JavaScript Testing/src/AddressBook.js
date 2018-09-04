@@ -3,7 +3,7 @@ function AddressBook() {
     this.initialComplete=false;
 }
 
-AddressBook.prototype.getInitialContacts=function(){
+AddressBook.prototype.getInitialContacts=function(cb){
     let self=this;
 
     setTimeout(function(){

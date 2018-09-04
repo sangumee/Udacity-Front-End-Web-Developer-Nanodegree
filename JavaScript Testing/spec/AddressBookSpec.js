@@ -1,20 +1,33 @@
 describe('Address Book', function () {
-    it('should be able to add a contact', function () {
-        let addressBook = new AddressBook(),
-        thisContact = new Contact();
+        let addressBook,
+        thisContact;
 
-        addressBook.addContact(thisContact);
+        beforeEach(function(){
+            addressBook=new AddressBook();
+            thisContact=new Contact();
+        });
 
-        expect(addressBook.getContact(0)).toBe(thisContact);
+        it('should be able to add a contact', function(){
+            addressBook.addContact(thisContact);
+            expect(addressBook.getContact(0)).toBe(thisContact);
+        });
+        it('should be able to delete a contact', function(){
+            addressBook.addContact(thisContact);
+            addressBook.deleteContact(0);
+            expect(addressBook.getContact(0)).not.toBeDefined();
+        });
+});
+
+describe('Async Address Book', function(){
+    let addressBook =new AddressBook();
+
+    beforeEach(function(done){
+        addressBook.getInitialContacts(function(){
+            done();
+        });
     });
-
-    it('should be able to delete a contact', function(){
-        let addressBook = new AddressBook(),
-        thisContact = new Contact();
-
-        addressBook.addContact(thisContact);
-        addressBook.deleteContact(0);
-
-        expect(addressBook.getContact(0)).not.toBeDefined();
+    it('should grab initial contacts', function(done){
+        expect(addressBook.initialComplete).toBe(true);
+        done();
     });
 });
